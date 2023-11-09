@@ -9,8 +9,9 @@ using System.Text.Json.Serialization;
 namespace CityInfo.API.Controllers
 {
     [ApiController]
-    [Authorize]
-    [Route("api/cities")]
+    //[Authorize]
+    [Route("api/v{version:apiVersion}/cities")]
+    [ApiVersion("1.0")]
     public class CitiesController: ControllerBase
     {
         const int maxCitiesPageSize = 20;

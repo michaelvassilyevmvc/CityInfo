@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace CityInfo.API.Controllers
 {
     [ApiController]
-    [Authorize(Policy = "MustBeFromAntwerp")]
-    [Route("api/cities/{cityId}/pointsofinterest")]
+    //[Authorize(Policy = "MustBeFromAntwerp")]
+    [Route("api/v{version:apiVersion}/cities/{cityId}/pointsofinterest")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     public class PointsOfInterestController:ControllerBase
     {
         private readonly ILogger<PointsOfInterestController> _logger;
@@ -36,11 +38,11 @@ namespace CityInfo.API.Controllers
                 //throw new Exception("Exception sample.");
 
                 //Запрет если город по которому хотят получить PointOfInterest не совпадает с городом в Claim то запрет на получение информации
-                var cityName = User.Claims.FirstOrDefault(c => c.Type == "city")?.Value;
-                if(!await _cityInfoRepository.CityNameMatchesCityId(cityName, cityId))
-                {
-                    return Forbid();
-                }
+                //var cityName = User.Claims.FirstOrDefault(c => c.Type == "city")?.Value;
+                //if(!await _cityInfoRepository.CityNameMatchesCityId(cityName, cityId))
+                //{
+                //    return Forbid();
+                //}
 
                 
                 if (!await _cityInfoRepository.CityExistsAsync(cityId))
