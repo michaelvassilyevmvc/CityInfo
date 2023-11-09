@@ -18,9 +18,11 @@ namespace CityInfo.API.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         [HttpGet]
-        public async Task<ActionResult<CityWithoutPointsOfInterestDto>> GetCities()
+        public async Task<ActionResult<CityWithoutPointsOfInterestDto>> GetCities(
+            [FromQuery(Name ="name")] string? name, string? searchQuery)
         {
-            var cityEntities = await _cityInfoRepository.GetCitiesAsync();
+
+            var cityEntities = await _cityInfoRepository.GetCitiesAsync(name,searchQuery);
             
             return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
         }
